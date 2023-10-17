@@ -1,12 +1,15 @@
-FROM ruby:2.4-stretch
+FROM ruby:2.4
 LABEL maintainer="Lazarus Lazaridis http://iridakos.com"
 
 # Change to repo directory
 WORKDIR /opt/duckrails
 
+
 # From now on execute rails stuff in production mode
 ENV RAILS_ENV production
 ENV RACK_ENV production
+ENV USERNAME $USERNAME
+ENV PASSWORD $PASSWORD
 
 # Expose container port 80
 EXPOSE 80
