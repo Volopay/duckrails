@@ -26,7 +26,7 @@ COPY docker-entrypoint.sh /
 COPY Gemfile Gemfile.lock ./
 
 # Install Gems
-RUN bundle install --deployment --without development test --binstubs --jobs=2 --retry=4
+RUN bundle install --without development test --binstubs --jobs=2 --retry=4
 
 # Copy in the rest of the app
 COPY . .

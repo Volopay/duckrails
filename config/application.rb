@@ -28,5 +28,14 @@ module Duckrails
     config.middleware.insert_after "Rails::Rack::Logger", "Duckrails::Synchronizer"
 
     config.autoload_paths += Dir["#{config.root}/lib/**/"]
+
+    # Cors
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins '*'
+        resource '*', headers: :any,
+        methods: [:get, :post, :options, :delete, :put, :patch]
+      end
+    end
   end
 end

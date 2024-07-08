@@ -16,6 +16,7 @@ gem 'sqlite3'
 gem 'pg', '~> 0.15'
 gem 'mysql2'
 gem 'puma'
+gem 'rack-cors'
 
 group :development, :test do
   gem 'byebug'
