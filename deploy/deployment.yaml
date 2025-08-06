@@ -1,0 +1,76 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mock-service
+  namespace: mocks
+  labels:
+    app: mock-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mock-service
+  template:
+    metadata:
+      labels:
+        app: mock-service
+        fargate: "yes"
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: mock-service
+          image: 616825170943.dkr.ecr.ap-south-1.amazonaws.com/mocks:latest
+          imagePullPolicy: Always
+          command: []
+          args:
+            - "sh scripts/start_server.sh"
+          ports:
+            - name: http-server
+              containerPort: 8080
+          resources:
+            limits:
+              cpu: "300m"
+              memory: "1024Mi"
+            requests:
+              cpu: "300m"
+              memory: "1024Mi"
+          env:
+            - name: DATABASE_ADAPTER
+              value: "postgresql"
+            - name: DATABASE_PORT
+              value: "5432"
+            - name: SECRET_KEY_BASE
+              valueFrom:
+                secretKeyRef:
+                  name: mocks-secret
+                  key: SECRET_KEY_BASE
+            - name: USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mocks-secret
+                  key: USERNAME
+            - name: PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mocks-secret
+                  key: PASSWORD
+            - name: DATABASE_HOSTNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mocks-secret
+                  key: DATABASE_HOSTNAME
+            - name: DATABASE_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: mocks-secret
+                  key: DATABASE_NAME
+            - name: DATABASE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mocks-secret
+                  key: DATABASE_USERNAME
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mocks-secret
+                  key: DATABASE_PASSWORD
