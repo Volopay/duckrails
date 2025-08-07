@@ -15,9 +15,7 @@ ENV PASSWORD $PASSWORD
 EXPOSE 80
 
 # Add Required Packages
-RUN apt-get update \
-	  && apt-get install -y --no-install-recommends nodejs libpq-dev libxml2-dev default-libmysqlclient-dev libsqlite3-dev \
-    && rm -rf /var/lib/apt/lists/*
+RUN sed -i 's/deb.debian.org/archive.debian.org/g' /etc/apt/sources.list &&     sed -i 's|security.debian.org/debian-security|archive.debian.org/debian-security|g' /etc/apt/sources.list &&     sed -i '/buster-updates/d' /etc/apt/sources.list &&     apt-get update &&     apt-get install -y --no-install-recommends nodejs libpq-dev libxml2-dev default-libmysqlclient-dev libsqlite3-dev &&     rm -rf /var/lib/apt/lists/*
 
 # Add docker entrypoint.sh
 COPY docker-entrypoint.sh /
