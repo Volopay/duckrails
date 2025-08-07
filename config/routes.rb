@@ -17,4 +17,6 @@ Rails.application.routes.draw do
   end
 
   Duckrails::Router.load_mock_routes!
+
+  get '/_ping', to: proc { [200, {}, ['pong!']] }
 end
